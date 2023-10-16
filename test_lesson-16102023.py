@@ -36,6 +36,8 @@ class TestPage1():
         browser.find_element(By.XPATH, "//div[@class = 'top_bar_user']/a[@href = 'user/login']")
 
 
+# pytest -s -v test_lesson-16102023.py
+# pytest -s -v --browser_mode=gui test_lesson-16102023.py
 # pytest -s -v -m "regression" test_lesson-16102023.py
 # -m mark "smoke" "regression" "chrome_117"
 # -m mark "not smoke" "not regression"

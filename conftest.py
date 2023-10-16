@@ -1,11 +1,30 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+opts_chrome = Options()
+
+def pytest_addoption(parser):
+    parser.addoption('--browser_mode', action='store', default="headless",
+                     help="By default is headless mode, but you can set --browser_mode='qui")
 
 @pytest.fixture(scope="function")
-def browser():
+def browser(request):
     print("\nstart browser for test..")
-    browser = webdriver.Chrome()
+    options = opts_chrome
+    options.add_argument('--start-maximized')
+    browser_mode = request.config.getoption("browser_mode")
+    if browser_mode == "gui":
+        print(f"\nbrowser_mode: {browser_mode}")
+    elif browser_mode == "headless":
+        options.add_argument('--headless')
+        print(f"\nbrowser_mode: {browser_mode}")
+    else:
+        print("must be gui or headless")
+    browser = webdriver.Chrome(options=options)
     yield browser
-    # цей код виконається після завершення всього тесту
     print("\nquit browser..")
     browser.quit()
+
+
+
+
